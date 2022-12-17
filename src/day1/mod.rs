@@ -1,6 +1,8 @@
-use std::num::ParseIntError;
+use core::num::ParseIntError;
 
-static INPUT: &str = include_str!("../inputs/day1.txt");
+use crate::DOUBLE_NEWLINE;
+
+static INPUT: &str = include_str!("input.txt");
 
 pub fn part1() -> Calories {
     Elves::try_from(INPUT)
@@ -47,7 +49,10 @@ pub struct Elves(Vec<Elf>);
 impl TryFrom<&str> for Elves {
     type Error = ParseIntError;
     fn try_from(value: &str) -> Result<Self, Self::Error> {
-        let elves: Result<Vec<_>, _> = value.split("\n\n").map(|v| Elf::try_from(v)).collect();
+        let elves: Result<Vec<_>, _> = value
+            .split(DOUBLE_NEWLINE)
+            .map(|v| Elf::try_from(v))
+            .collect();
         Ok(Self(elves?))
     }
 }
